@@ -13,25 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SignInTest {
 
-    private WebDriver driver;
-    private SignInPage signInPage;
-
-    @BeforeAll
-    void beforeAll() {
-        driver = DriverManager.getDriver();
-    }
-
-    @BeforeEach
-    void setUp() {
-        signInPage = new SignInPage(driver);
-        signInPage.visit("https://demo.guru99.com/test/newtours/");
-    }
-
-    @AfterAll
-    void afterAll() {
-        DriverManager.quitDriver();
-    }
-
     @ParameterizedTest(name = "[{index}] user={0}, pass={1}, success={2}")
     @CsvSource({
             "useradmin, password, true",
@@ -39,12 +20,21 @@ class SignInTest {
             "wronguser, password, false"
     })
     void signInScenarios(String user, String pass, boolean shouldSucceed) {
-        signInPage.signIn(user, pass);
+        DriverManager dm = new DriverManager();
+        WebDriver driver = dm.getDriver();   // nuevo driver para este caso
 
-        if (shouldSucceed) {
-            assertTrue(signInPage.isSuccessLoginVisible());
-        } else {
-            assertTrue(signInPage.isInvalidLoginVisible());
+        try {
+            SignInPage signInPage = new SignInPage(driver);
+            signInPage.visit("https://demo.guru99.com/test/newtours/");
+            signInPage.signIn(user, pass);
+
+            if (shouldSucceed) {
+                assertTrue(signInPage.isSuccessLoginVisible());
+            } else {
+                assertTrue(signInPage.isInvalidLoginVisible());
+            }
+        } finally {
+            driver.quit();
         }
     }
 }
