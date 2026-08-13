@@ -1,84 +1,103 @@
-# QA Automation Project
+# QA Automation Suite — Registration & Sign-In Flows
 
-Automated UI tests for web application registration and sign-in flows, implemented in Java using a Page Object pattern and Maven for build/test automation.
+![Java](https://img.shields.io/badge/Java-11%2B-orange)
+![Maven](https://img.shields.io/badge/Build-Maven-blue)
+![Selenium](https://img.shields.io/badge/Selenium-WebDriver-green)
+![Pattern](https://img.shields.io/badge/Pattern-Page%20Object%20Model-lightgrey)
 
-## Stack
-- Language: Java
-- Build / test: Maven
-- Patterns: Page Object Model (POM)
-- Notable components (in-repo): DriverManager, BasePage, RegisterPage, SignInPage
+Automated UI test suite for a web application's registration and sign-in flows, built with **Java + Selenium WebDriver**, structured using the **Page Object Model (POM)**, and driven by **Maven**.
 
-## What this repository contains
-This project implements a maintainable UI test suite that drives browser-based tests (e.g., Chrome/Firefox) and isolates page behavior behind page objects to keep tests readable and resilient.
+The goal of this project is to demonstrate a clean, maintainable approach to UI test automation: isolating page interactions from test logic, centralizing browser lifecycle management, and keeping the suite easy to extend as new flows are added.
 
-## Project structure
-Top-level files and folders:
-- .github/           (CI / workflow configuration - repository-level)
-- .gitignore
-- pom.xml            (Maven project file)
-- src/
-  - main/
-    - java/
-      - com/automation/
-        - base/      BasePage.java — base helpers and common page functionality
-        - core/      DriverManager.java — browser / WebDriver initialization and lifecycle
-        - pages/     RegisterPage.java, SignInPage.java — page objects for target flows
-  - test/            Tests live under src/test (test framework configured through Maven)
+---
 
-Annotated tree:
+## ✨ Highlights
+
+- **Page Object Model** architecture — test logic is fully decoupled from UI selectors and page behavior.
+- **Centralized WebDriver management** via `DriverManager`, handling browser initialization, configuration, and teardown.
+- **Reusable base layer** (`BasePage`) providing common waits and element-interaction helpers, reducing duplication across page classes.
+- **Configurable execution** through environment variables (`BASE_URL`, `BROWSER`, `HEADLESS`), making the suite portable across local and CI environments.
+- **Maven-driven** build and test execution, ready to integrate into a CI/CD pipeline (GitHub Actions).
+
+---
+
+## 🧱 Stack
+
+| Category   | Technology                          |
+|------------|--------------------------------------|
+| Language   | Java                                  |
+| Automation | Selenium WebDriver                    |
+| Build/Test | Maven                                 |
+| Pattern    | Page Object Model (POM)               |
+| CI         | GitHub Actions (`.github/`)           |
+
+---
+
+## 📁 Project Structure
+
 ```
 src/
-  main/
-    java/
-      com/automation/
-        base/       Page base classes and utilities (BasePage.java)
-        core/       WebDriver bootstrap & lifecycle (DriverManager.java)
-        pages/      Page objects for UI flows (RegisterPage.java, SignInPage.java)
-  test/            Test classes (functional / integration tests)
-pom.xml            Maven configuration and dependencies
+├── main/java/com/automation/
+│   ├── base/       BasePage.java        # Shared page utilities (waits, element helpers)
+│   ├── core/        DriverManager.java   # WebDriver bootstrap & lifecycle
+│   └── pages/        RegisterPage.java    # Registration flow page object
+│                     SignInPage.java      # Sign-in flow page object
+└── test/                                # Test classes (functional/integration)
+pom.xml                                   # Maven configuration and dependencies
+.github/                                  # CI workflow configuration
 ```
 
-## How to run
-Prerequisites:
-- JDK 11+ installed
-- Maven installed (mvn on PATH)
-- A browser driver available (or WebDriverManager configured via pom.xml)
+---
 
-From the repository root:
+## 🚀 Getting Started
 
-1. Verify Java & Maven:
-   - mvn -v
-2. Run the full test suite:
-   - mvn test
-3. Run a single test class:
-   - mvn -Dtest=YourTestClass test
+### Prerequisites
+- JDK 11+
+- Maven (`mvn` available on PATH)
+- A browser driver available locally, or WebDriverManager configured in `pom.xml`
 
-Environment variables commonly used by the suite (add or adapt in your environment or CI):
-- BASE_URL — application base URL under test (e.g., https://example.com)
-- BROWSER — browser to run tests on (e.g., chrome, firefox)
-- HEADLESS — run browser in headless mode (true/false)
+### Run the suite
 
-If browser drivers are not managed automatically, ensure the corresponding driver (chromedriver/geckodriver) is available in PATH or the DriverManager is configured to locate it.
+```bash
+# Verify environment
+mvn -v
 
-## Key code pointers
-- src/main/java/com/automation/core/DriverManager.java — central place to configure WebDriver, timeouts, and browser selection
-- src/main/java/com/automation/base/BasePage.java — shared page utilities (waits, element helpers)
-- src/main/java/com/automation/pages/RegisterPage.java — registration page actions/elements
-- src/main/java/com/automation/pages/SignInPage.java — sign-in page actions/elements
+# Run the full test suite
+mvn test
 
-## How to present this project on your CV
-Concise bullet examples you can use:
-- Developed a Java-based UI automation suite using Page Object Model to test registration and sign-in flows.
-- Built a reusable DriverManager for cross-browser Selenium WebDriver setup and lifecycle management.
-- Automated end-to-end scenarios with Maven-driven builds and test execution.
-- Organized tests and page objects for maintainability and easy onboarding of new test cases.
+# Run a single test class
+mvn -Dtest=YourTestClass test
+```
 
-## Notes & next steps (suggestions)
-- Confirm which test framework is used (JUnit or TestNG) in pom.xml and list it explicitly in the README.
-- Add example test commands and CI badges if you enable GitHub Actions / CI.
-- Include a short CONTRIBUTING.md if you want others to run and extend the suite easily.
+### Configuration
 
-## License & Contact
-- License: (add your license or `UNLICENSED` if private)
-- Author: genesis-morales
-- Contact: (add email or GitHub profile link)
+The suite reads the following environment variables:
+
+| Variable   | Description                          | Example                  |
+|------------|----------------------------------------|---------------------------|
+| `BASE_URL` | Base URL of the application under test | `https://example.com`     |
+| `BROWSER`  | Browser to run tests on                | `chrome`, `firefox`       |
+| `HEADLESS` | Run browser in headless mode           | `true` / `false`          |
+
+If drivers aren't managed automatically, make sure `chromedriver`/`geckodriver` is available on PATH, or configured through `DriverManager`.
+
+---
+
+## 🔑 Key Files
+
+| File | Purpose |
+|------|---------|
+| `core/DriverManager.java` | Central WebDriver configuration, timeouts, browser selection |
+| `base/BasePage.java` | Shared page utilities (waits, element helpers) |
+| `pages/RegisterPage.java` | Registration page actions and elements |
+| `pages/SignInPage.java` | Sign-in page actions and elements |
+
+---
+
+## 👤 Author
+
+**Génesis Morales** — [GitHub](https://github.com/genesis-morales)
+
+## 📄 License
+
+UNLICENSED — private/portfolio project. Update if publishing under an open license.
