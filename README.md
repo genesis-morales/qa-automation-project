@@ -17,6 +17,7 @@ The goal of this project is to demonstrate a clean, maintainable approach to UI 
 - **Centralized WebDriver management** via `DriverManager`, handling browser initialization, configuration, and teardown.
 - **Reusable base layer** (`BasePage`) providing common waits and element-interaction helpers, reducing duplication across page classes.
 - **Configurable execution** through environment variables (`BASE_URL`, `BROWSER`, `HEADLESS`), making the suite portable across local and CI environments.
+- **JUnit 5** as the testing framework, with tests organized for clear separation of functional scenarios.
 - **Maven-driven** build and test execution, ready to integrate into a CI/CD pipeline (GitHub Actions).
 
 ---
@@ -28,6 +29,7 @@ The goal of this project is to demonstrate a clean, maintainable approach to UI 
 | Language   | Java                                  |
 | Automation | Selenium WebDriver                    |
 | Build/Test | Maven                                 |
+| Testing    | JUnit 5                               |
 | Pattern    | Page Object Model (POM)               |
 | CI         | GitHub Actions (`.github/`)           |
 
